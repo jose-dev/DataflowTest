@@ -22,9 +22,7 @@ import org.apache.beam.sdk.io.TextIO;
 import org.apache.beam.sdk.options.*;
 import org.apache.beam.sdk.transforms.Count;
 import org.apache.beam.sdk.transforms.DoFn;
-import org.apache.beam.sdk.transforms.MapElements;
 import org.apache.beam.sdk.transforms.ParDo;
-import org.apache.beam.sdk.transforms.SimpleFunction;
 import org.apache.beam.sdk.values.KV;
 
 public class MinimalWordCount {
