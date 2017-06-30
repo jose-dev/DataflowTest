@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one or more
+    contributor license agreements.  See the NOTICE file distributed with
+    this work for additional information regarding copyright ownership.
+    The ASF licenses this file to You under the Apache License, Version 2.0
+    (the "License"); you may not use this file except in compliance with
+    the License.  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <!--
+    <parent>
+    <groupId>org.apache.beam</groupId>
+    <artifactId>beam-examples-java</artifactId>
+    <version>2.0.0</version>
+  </parent>
+  -->
+
+
+    <groupId>com.jose.dataflow</groupId>
+  <artifactId>jose-beam-copybqtable</artifactId>
+    <version>0.0.1</version>
+  <name>Apache Beam :: Examples :: Java</name>
+  <description>Apache Beam SDK provides a simple, Java-based
+  interface for processing virtually any size data. This
+  artifact includes all Apache Beam Java SDK examples.</description>
+
+  <packaging>jar</packaging>
+
+  <dependencies>
+      <dependency>
+          <groupId>org.apache.beam</groupId>
+          <artifactId>beam-sdks-java-core</artifactId>
+          <version>2.0.0</version>
+      </dependency>
+
+      <dependency>
+          <groupId>org.apache.beam</groupId>
+          <artifactId>beam-sdks-java-extensions-google-cloud-platform-core</artifactId>
+          <version>2.0.0</version>
+      </dependency>
+
+      <dependency>
+          <groupId>org.apache.beam</groupId>
+          <artifactId>beam-sdks-java-io-google-cloud-platform</artifactId>
+          <version>2.0.0</version>
+      </dependency>
+
+      <!-- https://mvnrepository.com/artifact/com.google.api-client/google-api-client -->
+      <dependency>
+          <groupId>com.google.api-client</groupId>
+          <artifactId>google-api-client</artifactId>
+          <version>1.22.0</version>
+      </dependency>
+
+      <dependency>
+          <groupId>org.apache.beam</groupId>
+          <artifactId>beam-runners-google-cloud-dataflow-java</artifactId>
+          <version>2.0.0</version>
+          <scope>runtime</scope>
+      </dependency>
+
+      <dependency>
+          <groupId>com.google.cloud</groupId>
+          <artifactId>google-cloud-bigquery</artifactId>
+          <version>0.20.0-beta</version>
+      </dependency>
+
+
+
+
+
+      <!-- https://mvnrepository.com/artifact/com.google.http-client/google-http-client -->
+      <!--
+      <dependency>
+          <groupId>com.google.http-client</groupId>
+          <artifactId>google-http-client</artifactId>
+          <version>1.22.0</version>
+      </dependency>
+      -->
+
+      <!--
+      <dependency>
+          <groupId>com.google.cloud.bigdataoss</groupId>
+          <artifactId>util</artifactId>
+      </dependency>
+      -->
+
+
+      <!-- https://mvnrepository.com/artifact/com.google.auth/google-auth-library-oauth2-http -->
+      <!--
+      <dependency>
+          <groupId>com.google.auth</groupId>
+          <artifactId>google-auth-library-oauth2-http</artifactId>
+          <version>0.7.0</version>
+      </dependency>
+      -->
+
+      <!-- https://mvnrepository.com/artifact/com.google.auth/google-auth-library-credentials -->
+      <!--
+      <dependency>
+          <groupId>com.google.auth</groupId>
+          <artifactId>google-auth-library-credentials</artifactId>
+          <version>0.7.0</version>
+      </dependency>
+      -->
+
+      <!--
+      <dependency>
+      <groupId>com.google.apis</groupId>
+      <artifactId>google-api-services-bigquery</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.google.code.findbugs</groupId>
+      <artifactId>jsr305</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.google.http-client</groupId>
+      <artifactId>google-http-client</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.google.cloud.bigdataoss</groupId>
+      <artifactId>util</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.google.auth</groupId>
+      <artifactId>google-auth-library-oauth2-http</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.google.auth</groupId>
+      <artifactId>google-auth-library-credentials</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.avro</groupId>
+      <artifactId>avro</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.google.apis</groupId>
+      <artifactId>google-api-services-pubsub</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.google.cloud.datastore</groupId>
+      <artifactId>datastore-v1-proto-client</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.google.cloud.datastore</groupId>
+      <artifactId>datastore-v1-protos</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>joda-time</groupId>
+      <artifactId>joda-time</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-jdk14</artifactId>
+      <scope>runtime</scope>
+      <optional>true</optional>
+    </dependency>
+    -->
+
+    <!-- Hamcrest and JUnit are required dependencies of PAssert,
+         which is used in the main code of DebuggingWordCount example. -->
+
+    <!--
+      <dependency>
+      <groupId>org.hamcrest</groupId>
+      <artifactId>hamcrest-all</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+    </dependency>
+    -->
+
+    <!-- Test dependencies -->
+
+    <!--
+      For testing the example itself, use the direct runner. This is separate from
+      the use of ValidatesRunner tests for testing a particular runner.
+    -->
+      <!--
+    <dependency>
+      <groupId>org.apache.beam</groupId>
+      <artifactId>beam-runners-direct-java</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.beam</groupId>
+      <artifactId>beam-sdks-java-io-google-cloud-platform</artifactId>
+      <classifier>tests</classifier>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-all</artifactId>
+      <scope>test</scope>
+    </dependency>
+    -->
+  </dependencies>
+</project>
