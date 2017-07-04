@@ -26,12 +26,16 @@ import org.apache.beam.sdk.options.*;
 import org.apache.beam.sdk.transforms.SerializableFunction;
 import com.google.cloud.bigquery.*;
 import com.google.cloud.bigquery.BigQueryOptions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class MinimalCopyBqTable {
+
+    private static final Logger LOG = LoggerFactory.getLogger(MinimalCopyBqTable.class);
 
     public interface Options extends PipelineOptions {
         @Description("Input table")
@@ -84,17 +88,16 @@ public class MinimalCopyBqTable {
         Schema schema = t.getDefinition().getSchema();
         List<TableFieldSchema> fields = new ArrayList<TableFieldSchema>();
         for (Field fld: schema.getFields()) {
-            System.out.println("name: " + fld.getName());
-            System.out.println("type: " + fld.getType().getValue().toString());
-            System.out.println("mode: " + fld.getMode().toString());
-
+            LOG.info("name: " + fld.getName());
+            LOG.info("type: " + fld.getType().getValue().toString());
+            LOG.info("mode: " + fld.getMode().toString());
 
             fields.add(new TableFieldSchema().setName(fld.getName())
                       .setType(fld.getType().getValue().toString())
                       .setMode(fld.getMode().toString()));
         }
 
-        System.out.println("number of fields: " + fields.size());
+        LOG.info("number of fields: " + fields.size());
         return new TableSchema().setFields(fields);
 
     }
