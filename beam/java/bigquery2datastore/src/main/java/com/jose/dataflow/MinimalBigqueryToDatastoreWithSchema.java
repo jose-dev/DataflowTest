@@ -76,14 +76,6 @@ public class MinimalBigqueryToDatastoreWithSchema {
         void setNamespace(@Nullable String value);
     }
 
-    static Key makeAncestorKey(@Nullable String namespace, String kind) {
-        Key.Builder keyBuilder = makeKey(kind, "root");
-        if (namespace != null) {
-            keyBuilder.getPartitionIdBuilder().setNamespaceId(namespace);
-        }
-        return keyBuilder.build();
-    }
-
 
     static class CreateEntityFn extends DoFn<TableRow, Entity> {
         private final String namespace;
@@ -165,7 +157,6 @@ public class MinimalBigqueryToDatastoreWithSchema {
             Entity.Builder entityBuilder = Entity.newBuilder();
 
             // All created entities have the same ancestor Key.
-            //Key.Builder keyBuilder = makeKey(ancestorKey, kind, content.get("CustomerIdentifier").toString());
             Key.Builder keyBuilder = makeKey(kind, content.get(keyName).toString());
 
             // NOTE: Namespace is not inherited between keys created with DatastoreHelper.makeKey, so
