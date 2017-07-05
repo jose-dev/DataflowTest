@@ -24,15 +24,15 @@ TEMPLATE = 'TemplateBigqueryViaTextToDatastoreWithSchema'
 DATASET = "dev-ocd-eu-datascience"
 NAMESPACE = "testnamespace"
 
-INPUT_TEXT = "gs://testdata-dev-ocd-eu-datascience/dataflow/original/*"
-INPUT = "dev-ocd-eu-datascience:aaa.original"
-KEYNAME = "id"
-KIND = "bqtablerowsxxx"
+#INPUT_TEXT = "gs://testdata-dev-ocd-eu-datascience/dataflow/original/*"
+#INPUT = "dev-ocd-eu-datascience:aaa.original"
+#KEYNAME = "id"
+#KIND = "bqtablerowsxxx"
 
-#INPUT_TEXT = "gs://testdata-dev-ocd-eu-datascience/dataflow/small_datastore/*"
-#INPUT = "dev-ocd-eu-datascience:aaa.small_datastore"
-#KEYNAME = "CustomerIdentifier"
-#KIND = "bqtablerows"
+INPUT_TEXT = "gs://testdata-dev-ocd-eu-datascience/dataflow/small_datastore/*"
+INPUT = "dev-ocd-eu-datascience:aaa.small_datastore"
+KEYNAME = "CustomerIdentifier"
+KIND = "bqtablerows"
 
 BODY = {
     "jobName": "{jobname}".format(jobname=JOBNAME),
