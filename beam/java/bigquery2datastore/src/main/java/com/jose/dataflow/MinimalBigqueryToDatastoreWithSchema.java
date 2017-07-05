@@ -1,20 +1,3 @@
-/*
- * Licensed to the Apache Software Foundation (ASF) under one
- * or more contributor license agreements.  See the NOTICE file
- * distributed with this work for additional information
- * regarding copyright ownership.  The ASF licenses this file
- * to you under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance
- * with the License.  You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package com.jose.dataflow;
 
 import com.google.api.services.bigquery.model.TableRow;
@@ -59,7 +42,6 @@ public class MinimalBigqueryToDatastoreWithSchema {
         String getDataset();
         void setDataset(String value);
 
-        // Note: This maps to Project ID for v1 version of datastore
         @Description("Name of key")
         @Validation.Required
         String getKeyName();
@@ -156,12 +138,8 @@ public class MinimalBigqueryToDatastoreWithSchema {
         public Entity makeEntity(TableRow content, Map<String, String> dtypes) throws Exception {
             Entity.Builder entityBuilder = Entity.newBuilder();
 
-            // All created entities have the same ancestor Key.
             Key.Builder keyBuilder = makeKey(kind, content.get(keyName).toString());
 
-            // NOTE: Namespace is not inherited between keys created with DatastoreHelper.makeKey, so
-            // we must set the namespace on keyBuilder. TODO: Once partitionId inheritance is added,
-            // we can simplify this code.
             if (namespace != null) {
                 keyBuilder.getPartitionIdBuilder().setNamespaceId(namespace);
             }
@@ -170,17 +148,10 @@ public class MinimalBigqueryToDatastoreWithSchema {
 
             Map<String, Value> properties = new HashMap<String, Value>();
             for (String fieldName: content.keySet()) {
-                //properties.put(fieldName, makeValue(content.get(fieldName).toString()).setExcludeFromIndexes(true).build());
                 properties.put(fieldName,
                                translateValue(content.get(fieldName), dtypes.get(fieldName)));
             }
             entityBuilder.putAllProperties(properties);
-
-//            // this also works to add multiple properties
-//            entityBuilder.getMutableProperties()
-//                    .put("countPastOrders", makeValue(content.get("countPastOrders").toString()).build());
-//            entityBuilder.getMutableProperties()
-//                    .put("CustomerIdentifier", makeValue(content.get("CustomerIdentifier").toString()).build());
 
             return entityBuilder.build();
         }
@@ -256,12 +227,8 @@ public class MinimalBigqueryToDatastoreWithSchema {
 
 
     public static void main(String[] args) throws Exception {
-        // The options are used in two places, for Dataflow service, and
-        // building DatastoreIO.Read object
         Options options = PipelineOptionsFactory.fromArgs(args).withValidation().as(Options.class);
 
-
-        // load data from BQ to datastore
         Pipeline p = Pipeline.create(options);
 
         // get schema of table to be uploaded
@@ -277,7 +244,6 @@ public class MinimalBigqueryToDatastoreWithSchema {
                                                                     options.getKeyName(),
                                                                     dataTypes)).withSideInputs(dataTypes))
          .apply("Saving to Datastore", DatastoreIO.v1().write().withProjectId(options.getDataset()));
-
 
         p.run().waitUntilFinish();
     }

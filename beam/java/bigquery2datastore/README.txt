@@ -62,6 +62,9 @@ TEMPLATE (READING FROM TEXT FILE CONTAINING BQ TABLE DATA)
 TEMPLATE (READING DIRECTLY FROM BQ TABLE)
 -----------------------------------------
 
+WARNING: it is not working as the BQ connector only allows one run :(
+
+
  mvn compile exec:java \
      -Dexec.mainClass=com.jose.dataflow.TemplateBigqueryToDatastore \
      -Dexec.cleanupDaemonThreads=false \
