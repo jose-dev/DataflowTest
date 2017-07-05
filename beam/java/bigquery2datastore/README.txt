@@ -21,6 +21,20 @@ gcloud auth application-default login
 mvn exec:java -Dexec.mainClass=com.jose.dataflow.MinimalBigqueryToDatastoreWithSchema -Dexec.cleanupDaemonThreads=false -Dexec.args="--project=dev-ocd-eu-datascience --stagingLocation=gs://dataflow-dev-ocd-eu-datascience/xxx --runner=DataflowRunner --tempLocation=gs://tmp-dataflow-dev-ocd-eu-datascience/xxx --dataset=dev-ocd-eu-datascience --namespace=testnamespace --input=dev-ocd-eu-datascience:aaa.small_datastore --keyName=CustomerIdentifier --kind=bqtablerows" -e -X
 
 
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+
+MINIMAL BQ TABLE DATA READ FROM TEXT FILE (WITH SIDEINPUT TEMPLATE)
+
+mvn clean install
+
+gcloud auth application-default login
+
+mvn exec:java -Dexec.mainClass=com.jose.dataflow.MinimalBigqueryViaTextToDatastoreWithSchema -Dexec.cleanupDaemonThreads=false -Dexec.args="--project=dev-ocd-eu-datascience --stagingLocation=gs://dataflow-dev-ocd-eu-datascience/xxx --runner=DataflowRunner --tempLocation=gs://tmp-dataflow-dev-ocd-eu-datascience/xxx --dataset=dev-ocd-eu-datascience --namespace=testnamespace --inputText=gs://testdata-dev-ocd-eu-datascience/dataflow/small_datastore/* --input=dev-ocd-eu-datascience:aaa.small_datastore --keyName=CustomerIdentifier --kind=bqtablerows" -e -X
+
+
+
 --------------------------------------------------------------------------------------------------------------------------------------------
 
 TEMPLATE
