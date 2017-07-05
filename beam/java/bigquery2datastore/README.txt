@@ -35,10 +35,32 @@ mvn exec:java -Dexec.mainClass=com.jose.dataflow.MinimalBigqueryViaTextToDatasto
 
 
 
+
 --------------------------------------------------------------------------------------------------------------------------------------------
 
-TEMPLATE
---------
+
+TEMPLATE (READING FROM TEXT FILE CONTAINING BQ TABLE DATA)
+----------------------------------------------------------
+
+ mvn compile exec:java \
+     -Dexec.mainClass=com.jose.dataflow.TemplateBigqueryViaTextToDatastoreWithSchema \
+     -Dexec.cleanupDaemonThreads=false \
+     -Dexec.args="--runner=DataflowRunner \
+                  --project=dev-ocd-eu-datascience \
+                  --stagingLocation=gs://dataflow-dev-ocd-eu-datascience/staging \
+                  --templateLocation=gs://dataflow-dev-ocd-eu-datascience/templates/TemplateBigqueryViaTextToDatastoreWithSchema/0.0.1 " \
+                  -e -X
+
+
+ python python/run_template.py
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+
+TEMPLATE (READING DIRECTLY FROM BQ TABLE)
+-----------------------------------------
 
  mvn compile exec:java \
      -Dexec.mainClass=com.jose.dataflow.TemplateBigqueryToDatastore \
@@ -52,4 +74,4 @@ TEMPLATE
 
 
 
- python python/run_template.py
+--------------------------------------------------------------------------------------------------------------------------------------------

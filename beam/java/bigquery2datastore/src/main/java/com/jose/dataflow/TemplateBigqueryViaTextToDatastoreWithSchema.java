@@ -27,10 +27,7 @@ import org.apache.beam.sdk.Pipeline;
 import org.apache.beam.sdk.coders.StringUtf8Coder;
 import org.apache.beam.sdk.io.TextIO;
 import org.apache.beam.sdk.io.gcp.datastore.DatastoreIO;
-import org.apache.beam.sdk.options.Description;
-import org.apache.beam.sdk.options.PipelineOptions;
-import org.apache.beam.sdk.options.PipelineOptionsFactory;
-import org.apache.beam.sdk.options.Validation;
+import org.apache.beam.sdk.options.*;
 import org.apache.beam.sdk.transforms.Create;
 import org.apache.beam.sdk.transforms.DoFn;
 import org.apache.beam.sdk.transforms.ParDo;
@@ -47,51 +44,51 @@ import java.util.Map;
 import static com.google.datastore.v1.client.DatastoreHelper.makeKey;
 import static com.google.datastore.v1.client.DatastoreHelper.makeValue;
 
-public class MinimalBigqueryViaTextToDatastoreWithSchema {
+public class TemplateBigqueryViaTextToDatastoreWithSchema {
     static final List<String> DUMMY_LINES = Arrays.asList("");
 
     public interface Options extends PipelineOptions {
-        @Description("Path of the text file with BQ data to store into Cloud Datastore")
+        @Description("Path of the file to read from and store to Cloud Datastore")
         @Validation.Required
-        String getInputText();
-        void setInputText(String value);
+        ValueProvider<String> getInputText();
+        void setInputText(ValueProvider<String> value);
 
-        @Description("Path of the BQ table to read schema from")
-        @Validation.Required
-        String getInput();
-        void setInput(String value);
+        @Description("Path of the BQ table to get schema from")
+        ValueProvider<String> getInput();
+        void setInput(ValueProvider<String> value);
 
         // Note: This maps to Project ID for v1 version of datastore
         @Description("Dataset ID to read from Cloud Datastore")
         @Validation.Required
-        String getDataset();
-        void setDataset(String value);
+        ValueProvider<String> getDataset();
+        void setDataset(ValueProvider<String> value);
 
         // Note: This maps to Project ID for v1 version of datastore
         @Description("Name of key")
         @Validation.Required
-        String getKeyName();
-        void setKeyName(String value);
+        ValueProvider<String> getKeyName();
+        void setKeyName(ValueProvider<String> value);
 
         @Description("Cloud Datastore Entity Kind")
         @Validation.Required
-        String getKind();
-        void setKind(String value);
+        ValueProvider<String> getKind();
+        void setKind(ValueProvider<String> value);
 
         @Description("Dataset namespace")
         @Validation.Required
-        String getNamespace();
-        void setNamespace(@Nullable String value);
+        ValueProvider<String> getNamespace();
+        void setNamespace(@Nullable ValueProvider<String> value);
     }
 
 
     static class CreateEntityFn extends DoFn<TableRow, Entity> {
-        private final String namespace;
-        private final String kind;
-        private final String keyName;
+        private final ValueProvider<String> namespace;
+        private final ValueProvider<String> kind;
+        private final ValueProvider<String> keyName;
         private PCollectionView<Map<String, String>> dataTypes;
 
-        CreateEntityFn(String namespace, String kind, String keyName, PCollectionView<Map<String, String>> dataTypes) {
+        CreateEntityFn(ValueProvider<String> namespace, ValueProvider<String> kind,
+                       ValueProvider<String> keyName, PCollectionView<Map<String, String>> dataTypes) {
             this.namespace = namespace;
             this.kind = kind;
             this.keyName = keyName;
@@ -165,13 +162,13 @@ public class MinimalBigqueryViaTextToDatastoreWithSchema {
             Entity.Builder entityBuilder = Entity.newBuilder();
 
             // All created entities have the same ancestor Key.
-            Key.Builder keyBuilder = makeKey(kind, content.get(keyName).toString());
+            Key.Builder keyBuilder = makeKey(kind.get(), content.get(keyName.get()).toString());
 
             // NOTE: Namespace is not inherited between keys created with DatastoreHelper.makeKey, so
             // we must set the namespace on keyBuilder. TODO: Once partitionId inheritance is added,
             // we can simplify this code.
-            if (namespace != null) {
-                keyBuilder.getPartitionIdBuilder().setNamespaceId(namespace);
+            if (namespace.get() != null) {
+                keyBuilder.getPartitionIdBuilder().setNamespaceId(namespace.get());
             }
 
             entityBuilder.setKey(keyBuilder.build());
@@ -205,15 +202,15 @@ public class MinimalBigqueryViaTextToDatastoreWithSchema {
     static class MapDataTypesFn extends DoFn<String, KV<String, String>> {
         private static final long serialVersionUID = 1L;
 
-        private String tableName;
+        private ValueProvider<String> tableName;
 
-        MapDataTypesFn(String tableName)	{
+        MapDataTypesFn(ValueProvider<String> tableName)	{
             this.tableName = tableName;
         }
 
         @ProcessElement
         public void processElement(ProcessContext c) throws Exception {
-            HashMap<String, String> dataTypes = mapDataTypes(tableName);
+            HashMap<String, String> dataTypes = mapDataTypes(tableName.get());
             for (String key: dataTypes.keySet()) {
                 c.output( KV.of(key, dataTypes.get(key)) );
             }
@@ -312,7 +309,7 @@ public class MinimalBigqueryViaTextToDatastoreWithSchema {
          .apply("Saving to Datastore", DatastoreIO.v1().write().withProjectId(options.getDataset()));
 
 
-        p.run().waitUntilFinish();
+        p.run();
     }
 
 }
