@@ -19,8 +19,7 @@ TEMPLATE
      -Dexec.args="--runner=DataflowRunner \
                   --project=dev-ocd-eu-datascience \
                   --stagingLocation=gs://dataflow-dev-ocd-eu-datascience/staging \
-                  --tempLocation=gs://tmp-dataflow-dev-ocd-eu-datascience/tmploc \
-                  --templateLocation=gs://dataflow-dev-ocd-eu-datascience/templates/TemplateBigqueryToDatastore/0.0.1" \
+                  --templateLocation=gs://dataflow-dev-ocd-eu-datascience/templates/TemplateBigqueryToDatastore/0.0.1 " \
                   -e -X
 
 

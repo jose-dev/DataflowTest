@@ -21,13 +21,14 @@ VERSION='0.0.1'
 BUCKET='dataflow-dev-ocd-eu-datascience'
 TEMPLATE = 'TemplateBigqueryToDatastore'
 
-
 DATASET = "dev-ocd-eu-datascience"
 NAMESPACE = "testnamespace"
-INPUT = "dev-ocd-eu-datascience:aaa.original"
-#INPUT = "dev-ocd-eu-datascience:aaa.small_datastore"
+KIND = "bqtablerows"
+
+#INPUT = "dev-ocd-eu-datascience:aaa.original"
+#KEYNAME = "id"
+INPUT = "dev-ocd-eu-datascience:aaa.small_datastore"
 KEYNAME = "CustomerIdentifier"
-KIND = "bqtablerows2"
 
 BODY = {
     "jobName": "{jobname}".format(jobname=JOBNAME),
@@ -40,8 +41,9 @@ BODY = {
         "kind" : KIND
     },
     "environment": {
-        "tempLocation": "gs://{bucket}/temp".format(bucket=BUCKET),
-        "zone": "us-central1-f"
+        "tempLocation": "gs://tmp-dataflow-dev-ocd-eu-datascience/xxx",
+#        "gcpTempLocation": "gs://tmp-dataflow-dev-ocd-eu-datascience/xxx",
+#        "zone": "us-central1-f"
     }
 }
 
