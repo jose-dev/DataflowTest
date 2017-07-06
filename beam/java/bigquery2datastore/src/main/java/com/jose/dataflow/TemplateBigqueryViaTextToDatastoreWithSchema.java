@@ -231,20 +231,11 @@ public class TemplateBigqueryViaTextToDatastoreWithSchema {
     }
 
 
-    static class TextToHashMapFn extends DoFn<String, HashMap> {
+    static class JsonTextToTableRowFn extends DoFn<String, TableRow> {
         @ProcessElement
         public void processElement(ProcessContext c) throws Exception {
             String s = c.element();
             HashMap m = new ObjectMapper().readValue(s, HashMap.class);
-            c.output(m);
-        }
-    }
-
-
-    static class HashMapToTableRowFn extends DoFn<HashMap, TableRow> {
-        @ProcessElement
-        public void processElement(ProcessContext c) throws Exception {
-            HashMap m = c.element();
             TableRow row = new TableRow();
             for (Object key: m.keySet()) {
                 row.put(key.toString(), m.get(key));
@@ -267,8 +258,7 @@ public class TemplateBigqueryViaTextToDatastoreWithSchema {
 
         // load BQ table to datastore
         p.apply("Reading Text Data", TextIO.read().from(options.getInputText()))
-         .apply("Convert JSON text to HashMaps", ParDo.of(new TextToHashMapFn()))
-         .apply("Convert HashMap to TableRow", ParDo.of(new HashMapToTableRowFn()))
+         .apply("Convert JSON text to TableRow", ParDo.of(new JsonTextToTableRowFn()))
          .apply("TableRow to Entities", ParDo.of(new CreateEntityFn(options.getNamespace(),
                                                                     options.getKind(),
                                                                     options.getKeyName(),
