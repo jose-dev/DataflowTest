@@ -16,21 +16,21 @@ service = build('dataflow', 'v1b3', credentials=credentials)
 
 # Set the following variables to your values.
 JOBNAME = 'testingbq2datastoretemplate'
-PROJECT = 'dev-ocd-eu-datascience'
+PROJECT = 'dev-osp-eu-mlservices'
 VERSION='0.0.1'
-BUCKET='dataflow-dev-ocd-eu-datascience'
+BUCKET='dataflow-dev-osp-eu-mlservices'
 TEMPLATE = 'TemplateBigqueryViaTextToDatastoreWithSchema'
 
-DATASET = "dev-ocd-eu-datascience"
+DATASET = "dev-osp-eu-mlservices"
 NAMESPACE = "testnamespace"
 
-#INPUT_TEXT = "gs://testdata-dev-ocd-eu-datascience/dataflow/original/*"
-#INPUT = "dev-ocd-eu-datascience:aaa.original"
+#INPUT_TEXT = "gs://testdata-dev-osp-eu-mlservices/dataflow/original/*"
+#INPUT = "dev-osp-eu-mlservices:aaa.original"
 #KEYNAME = "id"
 #KIND = "bqtablerowsxxx"
 
-INPUT_TEXT = "gs://testdata-dev-ocd-eu-datascience/dataflow/small_datastore/*"
-INPUT = "dev-ocd-eu-datascience:aaa.small_datastore"
+INPUT_TEXT = "gs://testdata-dev-osp-eu-mlservices/dataflow/small_datastore/*"
+INPUT = "dev-osp-eu-mlservices:aaa.small_datastore"
 KEYNAME = "CustomerIdentifier"
 KIND = "bqtablerows"
 
@@ -46,8 +46,8 @@ BODY = {
         "kind" : KIND
     },
 #    "environment": {
-#        "tempLocation": "gs://tmp-dataflow-dev-ocd-eu-datascience/xxx",
-#        "gcpTempLocation": "gs://tmp-dataflow-dev-ocd-eu-datascience/xxx",
+#        "tempLocation": "gs://tmp-dataflow-dev-osp-eu-mlservices/xxx",
+#        "gcpTempLocation": "gs://tmp-dataflow-dev-osp-eu-mlservices/xxx",
 #        "zone": "us-central1-f"
 #    }
 }

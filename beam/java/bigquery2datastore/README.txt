@@ -5,7 +5,7 @@ mvn clean install
 
 gcloud auth application-default login
 
-mvn exec:java -Dexec.mainClass=com.jose.dataflow.MinimalBigqueryToDatastore -Dexec.cleanupDaemonThreads=false -Dexec.args="--project=dev-ocd-eu-datascience --stagingLocation=gs://dataflow-dev-ocd-eu-datascience/xxx --runner=DataflowRunner --tempLocation=gs://tmp-dataflow-dev-ocd-eu-datascience/xxx --dataset=dev-ocd-eu-datascience --namespace=testnamespace --input=dev-ocd-eu-datascience:aaa.small_datastore --keyName=CustomerIdentifier --kind=bqtablerows" -e -X
+mvn exec:java -Dexec.mainClass=com.jose.dataflow.MinimalBigqueryToDatastore -Dexec.cleanupDaemonThreads=false -Dexec.args="--project=dev-osp-eu-mlservices --stagingLocation=gs://dataflow-dev-osp-eu-mlservices/xxx --runner=DataflowRunner --tempLocation=gs://tmp-dataflow-dev-osp-eu-mlservices/xxx --dataset=dev-osp-eu-mlservices --namespace=testnamespace --input=dev-osp-eu-mlservices:aaa.small_datastore --keyName=CustomerIdentifier --kind=bqtablerows" -e -X
 
 
 
@@ -18,7 +18,7 @@ mvn clean install
 
 gcloud auth application-default login
 
-mvn exec:java -Dexec.mainClass=com.jose.dataflow.MinimalBigqueryToDatastoreWithSchema -Dexec.cleanupDaemonThreads=false -Dexec.args="--project=dev-ocd-eu-datascience --stagingLocation=gs://dataflow-dev-ocd-eu-datascience/xxx --runner=DataflowRunner --tempLocation=gs://tmp-dataflow-dev-ocd-eu-datascience/xxx --dataset=dev-ocd-eu-datascience --namespace=testnamespace --input=dev-ocd-eu-datascience:aaa.small_datastore --keyName=CustomerIdentifier --kind=bqtablerows" -e -X
+mvn exec:java -Dexec.mainClass=com.jose.dataflow.MinimalBigqueryToDatastoreWithSchema -Dexec.cleanupDaemonThreads=false -Dexec.args="--project=dev-osp-eu-mlservices --stagingLocation=gs://dataflow-dev-osp-eu-mlservices/xxx --runner=DataflowRunner --tempLocation=gs://tmp-dataflow-dev-osp-eu-mlservices/xxx --dataset=dev-osp-eu-mlservices --namespace=testnamespace --input=dev-osp-eu-mlservices:aaa.small_datastore --keyName=CustomerIdentifier --kind=bqtablerows" -e -X
 
 
 
@@ -31,7 +31,7 @@ mvn clean install
 
 gcloud auth application-default login
 
-mvn exec:java -Dexec.mainClass=com.jose.dataflow.MinimalBigqueryViaTextToDatastoreWithSchema -Dexec.cleanupDaemonThreads=false -Dexec.args="--project=dev-ocd-eu-datascience --stagingLocation=gs://dataflow-dev-ocd-eu-datascience/xxx --runner=DataflowRunner --tempLocation=gs://tmp-dataflow-dev-ocd-eu-datascience/xxx --dataset=dev-ocd-eu-datascience --namespace=testnamespace --inputText=gs://testdata-dev-ocd-eu-datascience/dataflow/small_datastore/* --input=dev-ocd-eu-datascience:aaa.small_datastore --keyName=CustomerIdentifier --kind=bqtablerows" -e -X
+mvn exec:java -Dexec.mainClass=com.jose.dataflow.MinimalBigqueryViaTextToDatastoreWithSchema -Dexec.cleanupDaemonThreads=false -Dexec.args="--project=dev-osp-eu-mlservices --stagingLocation=gs://dataflow-dev-osp-eu-mlservices/xxx --runner=DataflowRunner --tempLocation=gs://tmp-dataflow-dev-osp-eu-mlservices/xxx --dataset=dev-osp-eu-mlservices --namespace=testnamespace --inputText=gs://testdata-dev-osp-eu-mlservices/dataflow/small_datastore/* --input=dev-osp-eu-mlservices:aaa.small_datastore --keyName=CustomerIdentifier --kind=bqtablerows" -e -X
 
 
 
@@ -46,9 +46,9 @@ TEMPLATE (READING FROM TEXT FILE CONTAINING BQ TABLE DATA)
      -Dexec.mainClass=com.jose.dataflow.TemplateBigqueryViaTextToDatastoreWithSchema \
      -Dexec.cleanupDaemonThreads=false \
      -Dexec.args="--runner=DataflowRunner \
-                  --project=dev-ocd-eu-datascience \
-                  --stagingLocation=gs://dataflow-dev-ocd-eu-datascience/staging \
-                  --templateLocation=gs://dataflow-dev-ocd-eu-datascience/templates/TemplateBigqueryViaTextToDatastoreWithSchema/0.0.1 " \
+                  --project=dev-osp-eu-mlservices \
+                  --stagingLocation=gs://dataflow-dev-osp-eu-mlservices/staging \
+                  --templateLocation=gs://dataflow-dev-osp-eu-mlservices/templates/TemplateBigqueryViaTextToDatastoreWithSchema/0.0.1 " \
                   -e -X
 
 
@@ -69,9 +69,9 @@ WARNING: it is not working as the BQ connector only allows one run :(
      -Dexec.mainClass=com.jose.dataflow.TemplateBigqueryToDatastore \
      -Dexec.cleanupDaemonThreads=false \
      -Dexec.args="--runner=DataflowRunner \
-                  --project=dev-ocd-eu-datascience \
-                  --stagingLocation=gs://dataflow-dev-ocd-eu-datascience/staging \
-                  --templateLocation=gs://dataflow-dev-ocd-eu-datascience/templates/TemplateBigqueryToDatastore/0.0.1 " \
+                  --project=dev-osp-eu-mlservices \
+                  --stagingLocation=gs://dataflow-dev-osp-eu-mlservices/staging \
+                  --templateLocation=gs://dataflow-dev-osp-eu-mlservices/templates/TemplateBigqueryToDatastore/0.0.1 " \
                   -e -X
 
 
